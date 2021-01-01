@@ -4,6 +4,7 @@ import vsDarkTheme from './themes/vs-dark';
 import 'vscode-codicons/dist/codicon.css';
 import App from './app';
 import ReactDOM from 'react-dom';
+import './reportWebVitals';
 
 const GlobalStyle = createGlobalStyle`
   body {
