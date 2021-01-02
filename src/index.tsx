@@ -12,6 +12,36 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: Inter, Roboto, sans-serif;
   }
+
+  .Resizer {
+    z-index: 1;
+  }
+
+  .Resizer:hover {
+    -webkit-transition: all 2s ease;
+    transition: all 2s ease;
+  }
+
+  .Resizer.horizontal {
+    height: 8px;
+    margin: -5px 0;
+    cursor: row-resize;
+    width: 100%;
+  }
+
+  .Resizer.vertical {
+    width: 8px;
+    margin: 0 -5px;
+    cursor: col-resize;
+  }
+
+  .Resizer.disabled {
+    cursor: not-allowed;
+  }
+
+  .Resizer.disabled:hover {
+    border-color: transparent;
+  }
 `;
 
 function Index() {

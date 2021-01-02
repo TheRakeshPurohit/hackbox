@@ -6,7 +6,7 @@ import OpenFiles from './components/open-files/open-files';
 
 const Container = styled.div`
   height: 100%;
-  width: 300px;
+  width: 100%;
   background: ${props => props.theme.colors['sideBar.background']};
   color: ${(props) => props.theme.colors['sideBar.foreground'] || props.theme.colors['foreground']};
   user-select: none;

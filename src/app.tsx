@@ -8,14 +8,23 @@ import Statusbar from "@hackbox/components/statusbar/statusbar";
 import 'vscode-codicons/dist/codicon.css';
 import { useStore } from './store';
 import { FILES } from './templates/react';
+import SplitPane from 'react-split-pane';
 
 const Container = styled.div`
   height: 100vh;
 `;
 
 const Workspace = styled.div`
-  display: flex;
   height: calc(100vh - 25px);
+`;
+
+const EditorContainer = styled.div`
+  height: calc(100vh - 25px);
+`;
+
+const AciticityBarAndSidebarContainer = styled.div`
+  height: calc(100vh - 25px);
+  display: flex;
 `;
 
 export default function Home() {
@@ -29,9 +38,15 @@ export default function Home() {
   return (
     <Container>
       <Workspace>
-        <ActivityBar onSidebarItemClicked={name => name && setSelectedSidebarContainer(name)} />
-        <SideBar selectedContainer={selectedSidebarContainer} />
-        <Editor />
+        <SplitPane minSize={200} defaultSize={300}>
+          <AciticityBarAndSidebarContainer>
+            <ActivityBar onSidebarItemClicked={name => name && setSelectedSidebarContainer(name)} />
+            <SideBar selectedContainer={selectedSidebarContainer} />
+          </AciticityBarAndSidebarContainer>
+          <EditorContainer>
+            <Editor />
+          </EditorContainer>  
+        </SplitPane>
       </Workspace>
       <Statusbar />
     </Container>
