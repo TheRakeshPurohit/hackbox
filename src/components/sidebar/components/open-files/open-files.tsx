@@ -12,20 +12,36 @@ type OpenFileProps = {
   isSelected?: boolean;
 }
 
+const CloseButton = styled.div`
+  :hover {
+    visibility: visible;
+  }
+`;
+
 const OpenFile = styled.div<OpenFileProps>`
   padding: 5px;
   cursor: pointer;
   outline: none;
+  background: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionBackground']: 'none'};
+  color: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionForeground']: 'inherit'};
+
   :hover {
     background: ${(props: any) => !props.isSelected && props.theme.colors['list.hoverBackground']};
     color: ${(props: any) => !props.isSelected && props.theme.colors['list.hoverForeground']};
   }
+
   :focus {
     background: ${props => props.isSelected? props.theme.colors['list.activeSelectionBackground']: 'none'};
     color: ${props => props.isSelected? props.theme.colors['list.activeSelectionForeground']: 'inherit'};
   }
-  background: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionBackground']: 'none'};
-  color: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionForeground']: 'inherit'};
+
+  ${CloseButton} {
+    visibility: hidden;
+  }
+  
+  :hover ${CloseButton} {
+    visibility: visible;
+  }
 `;
 
 type OpenFileContainerProps = {
@@ -53,18 +69,19 @@ export default function OpenFiles() {
     <Container>
       {openFiles.map((filePath, index) => {
         const filename = getBasename(filePath);
+        const isSelected = filePath === selectedFile;
 
         return (
-          <OpenFile tabIndex={0} isSelected={filePath === selectedFile} key={index} onClick={() => {
+          <OpenFile tabIndex={0} isSelected={isSelected} key={index} onClick={() => {
             setSelecetedFile(filePath);
           }}>
             <OpenFileContainer>
-              <div onClick={(evt) => {
+              <CloseButton style={isSelected? { visibility: 'visible' }: {}} onClick={(evt) => {
                 // if we don't stop propogation it would select that file again
                 evt.stopPropagation();
 
                 closeFile(filePath);
-              }} className="codicon codicon-close" style={{ visibility: filePath === selectedFile? 'visible': 'hidden' }} />
+              }} className="codicon codicon-close"/>
               <FileNameContainer>
                 <Icon entityName={filename} />
                 <div style={{ marginLeft: "5px" }}>{filename}</div>
