@@ -19,9 +19,9 @@ ReactDOM.render(<h1>hello world!</h1>, document.getElementById('root'));
 }
 `,
   'package.json': `{
-  name: "hackbox",
-  author: "Ameer Jhan",
-  dependencies: {}
+  "name": "hackbox",
+  "author": "Ameer Jhan",
+  "dependencies": {}
 }
 `
 } as any;

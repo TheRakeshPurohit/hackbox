@@ -1,4 +1,5 @@
 import { getIconForFile, getIconForFolder, getIconForOpenFolder } from "vscode-material-icon-theme-js";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 const vscodeMaterialIcons = 'https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons';
 
@@ -82,4 +83,16 @@ export function getLanguageFromExt(filename: string) {
   const [, ext] = filename.split('.');
 
   return extLanguageMap[ext];
+}
+
+export function loadMonacoModels(files: Record<string, string>) {
+  monaco.editor.getModels().forEach(model => model.dispose());
+  
+  for (const filePath in files) {
+    monaco.editor.createModel(
+      files[filePath],
+      getLanguageFromExt(getBasename(filePath)),
+      monaco.Uri.from({ path: filePath, scheme: 'file' })
+    );
+  }
 }

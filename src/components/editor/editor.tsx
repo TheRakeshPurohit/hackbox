@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useStore } from "@hackbox/store";
 import styled from "styled-components";
 import Breadcrumbs from "./components/breadcrumbs/breadcrumbs";
 import EmptyState from "./components/empty-state/empty-state";
 import Tabs from "./components/tabs/tabs";
 import MonacoEditor from 'react-monaco-editor';
-import { getLanguageFromExt } from '@hackbox/utils/utils';
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 const Container = styled.div`
   display: flex;
@@ -16,14 +16,41 @@ const Container = styled.div`
 export default function Editor() {
   const selectedFile = useStore(state => state.selectedFile);
   const openFiles = useStore(state => state.openFiles);
-  const language = getLanguageFromExt(selectedFile);
+  const monacoEditorRef = useRef<MonacoEditor|null>();
+  const loadEditorModel = (selectedFile: string) => {
+    if (monacoEditorRef.current && selectedFile) {
+      const editorModel = monaco.editor.getModels().find(model => model.uri.path === `/${selectedFile}`);
+
+      if (editorModel) {
+        monacoEditorRef.current.editor?.setModel(editorModel);
+      }
+    }
+  }
+
+  // load the file whenever a selection is changed
+  useEffect(() => {
+    loadEditorModel(selectedFile);
+  }, [selectedFile])
 
   return (
-    selectedFile? (
+    openFiles.length > 0? (
       <Container>
         <Tabs filePaths={openFiles} />
         <Breadcrumbs filePath={selectedFile} />
-        <MonacoEditor theme="vs-dark" language={language} />
+        <MonacoEditor
+          ref={(ref) => {
+            monacoEditorRef.current = ref;
+            // load the selected file
+            loadEditorModel(selectedFile);
+          }}
+          options={{
+            minimap: {
+              enabled: false
+            },
+            scrollBeyondLastLine: false
+          }}
+          theme="vs-dark"
+        />
       </Container>
     ): <EmptyState />
   );

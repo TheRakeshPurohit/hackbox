@@ -46,8 +46,7 @@ const TreeCSS = createGlobalStyle`
 export default function FileTree() {
   const { required, handlers } = useTreeState({
     data: convertFilesToTree(FILES),
-    id: '/',
-    defaultOpened: true
+    id: '/'
   });
   const tree = treeHandlers.trees['/'];
   const setSelectedFile = useStore(state => state.setSelectedFile);
