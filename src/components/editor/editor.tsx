@@ -16,6 +16,7 @@ const Container = styled.div`
 export default function Editor() {
   const selectedFile = useStore(state => state.selectedFile);
   const openFiles = useStore(state => state.openFiles);
+  const colorMode = useStore(state => state.colorMode);
   const monacoEditorRef = useRef<MonacoEditor|null>();
   const loadEditorModel = (selectedFile: string) => {
     if (monacoEditorRef.current && selectedFile) {
@@ -49,7 +50,7 @@ export default function Editor() {
             },
             scrollBeyondLastLine: false
           }}
-          theme="vs-dark"
+          theme={`vs-${colorMode}`}
         />
       </Container>
     ): <EmptyState />

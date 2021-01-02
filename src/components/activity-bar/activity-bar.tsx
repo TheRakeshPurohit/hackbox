@@ -1,3 +1,4 @@
+import { useStore } from '@hackbox/store';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -9,6 +10,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
 `;
 
@@ -52,21 +54,31 @@ export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) 
     }
   };
   const [selectedItem, setSelectedItem] = useState<string|null>('files');
+  const toggleColorMode = useStore(state => state.toggleColorMode);
 
   return (
     <Container>
-      <ActivityBarItem
-          isSelected={selectedItem === 'files'} 
-          onClick={onClicked(onSidebarItemClicked, 'files')}
+      <div>
+        <ActivityBarItem
+            isSelected={selectedItem === 'files'} 
+            onClick={onClicked(onSidebarItemClicked, 'files')}
+          >
+          <div className="codicon codicon-files" />
+        </ActivityBarItem>
+        <ActivityBarItem
+          isSelected={selectedItem === 'settings'}
+          onClick={onClicked(onSidebarItemClicked, 'settings')}
         >
-        <div className="codicon codicon-files" />
-      </ActivityBarItem>
-      <ActivityBarItem
-        isSelected={selectedItem === 'settings'}
-        onClick={onClicked(onSidebarItemClicked, 'settings')}
-      >
-        <div className="codicon codicon-gear" />
-      </ActivityBarItem>
+          <div className="codicon codicon-gear" />
+        </ActivityBarItem>
+      </div>
+      <div>
+        <ActivityBarItem
+          onClick={() => toggleColorMode()}
+        >
+          <div className="codicon codicon-color-mode" />
+        </ActivityBarItem>
+      </div>
     </Container>
   )
 }

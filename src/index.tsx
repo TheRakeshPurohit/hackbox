@@ -1,10 +1,10 @@
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import vsDarkTheme from './themes/vs-dark';
 import 'vscode-codicons/dist/codicon.css';
 import App from './app';
 import ReactDOM from 'react-dom';
 import './reportWebVitals';
+import { useStore } from './store';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,9 +15,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function Index() {
+  const theme = useStore(state => state.theme);
+
   return (
     <React.StrictMode>
-      <ThemeProvider theme={vsDarkTheme}>
+      <ThemeProvider theme={theme}>
         <GlobalStyle />
         <App />
       </ThemeProvider>
