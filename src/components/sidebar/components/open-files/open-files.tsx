@@ -15,12 +15,17 @@ type OpenFileProps = {
 const OpenFile = styled.div<OpenFileProps>`
   padding: 5px;
   cursor: pointer;
+  outline: none;
   :hover {
     background: ${(props: any) => !props.isSelected && props.theme.colors['list.hoverBackground']};
     color: ${(props: any) => !props.isSelected && props.theme.colors['list.hoverForeground']};
   }
-  background: ${props => props.isSelected? props.theme.colors['list.activeSelectionBackground']: 'none'};
-  color: ${props => props.isSelected? props.theme.colors['list.activeSelectionForeground']: 'inherit'};
+  :focus {
+    background: ${props => props.isSelected? props.theme.colors['list.activeSelectionBackground']: 'none'};
+    color: ${props => props.isSelected? props.theme.colors['list.activeSelectionForeground']: 'inherit'};
+  }
+  background: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionBackground']: 'none'};
+  color: ${props => props.isSelected? props.theme.colors['list.inactiveSelectionForeground']: 'inherit'};
 `;
 
 type OpenFileContainerProps = {
@@ -50,7 +55,7 @@ export default function OpenFiles() {
         const filename = getBasename(filePath);
 
         return (
-          <OpenFile isSelected={filePath === selectedFile} key={index} onClick={() => {
+          <OpenFile tabIndex={0} isSelected={filePath === selectedFile} key={index} onClick={() => {
             setSelecetedFile(filePath);
           }}>
             <OpenFileContainer>

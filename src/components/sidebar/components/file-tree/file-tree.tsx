@@ -28,10 +28,15 @@ const IconContainer = styled.div<{ isFile?: boolean }>`
 
 const TreeCSS = createGlobalStyle`
   .selected-node-wrapper {
+    background: ${(props: any) => props.theme.colors['list.inactiveSelectionBackground']};
+    color: ${(props: any) => props.theme.colors['list.inactiveSelectionForeground']};
+  }
+
+  .selected-node-wrapper:focus {
     background: ${(props: any) => props.theme.colors['list.activeSelectionBackground']};
     color: ${(props: any) => props.theme.colors['list.activeSelectionForeground']};
   }
-
+  
   :not(.selected-node-wrapper).node-wrapper:hover {
     background: ${(props: any) => props.theme.colors['list.hoverBackground']};
     color: ${(props: any) => props.theme.colors['list.hoverForeground']};
