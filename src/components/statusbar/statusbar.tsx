@@ -1,7 +1,7 @@
 import { useStore } from '@hackbox/store';
 import React from 'react';
 import styled from 'styled-components';
-import { getLanguageNameFromExt } from '@hackbox/utils/utils';
+import { getLanguageNameFromExt, getVimStatusContainerId } from '@hackbox/utils/utils';
 
 const Container = styled.div`
   background: ${props => props.theme.colors['statusBar.background']};
@@ -14,7 +14,7 @@ const Container = styled.div`
   justify-content: flex-end;
   padding: 5px 0px;
   box-sizing: border-box;
-  font-size: 0.8em;\
+  font-size: 0.8em;
 `;
 
 const Content = styled.div`
@@ -25,13 +25,25 @@ const Content = styled.div`
   }
 `;
 
+const VimStatusContainer = styled.div`
+  input {
+    background: ${props => props.theme.colors['statusBar.background']};
+    color: ${props => props.theme.colors['statusBar.foreground']};
+    border: 0;
+    outline: none;
+  }
+`;
+
 export default function Statusbar() {
   const selectedFile = useStore(state => state.selectedFile);
   const language = getLanguageNameFromExt(selectedFile);
 
   return (
-    <Container>
+    <Container id="status-bar">
       <Content>
+        <VimStatusContainer>
+          <div id={getVimStatusContainerId()}></div>
+        </VimStatusContainer>
         <div>{language}</div>
         <div className="codicon codicon-bell-dot" />
       </Content>

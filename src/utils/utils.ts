@@ -96,3 +96,7 @@ export function loadMonacoModels(files: Record<string, string>) {
     );
   }
 }
+
+export function getVimStatusContainerId() {
+  return 'vim-status-container';
+}

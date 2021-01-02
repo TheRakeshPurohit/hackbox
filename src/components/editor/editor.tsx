@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useStore } from "@hackbox/store";
 import styled from "styled-components";
 import Breadcrumbs from "./components/breadcrumbs/breadcrumbs";
@@ -6,6 +6,8 @@ import EmptyState from "./components/empty-state/empty-state";
 import Tabs from "./components/tabs/tabs";
 import MonacoEditor from 'react-monaco-editor';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import { initVimMode } from 'monaco-vim';
+import { getVimStatusContainerId } from '@hackbox/utils/utils';
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +30,9 @@ export default function Editor() {
       }
     }
   }
+  const onEditorDidMount = useCallback((editor) => {
+   initVimMode(editor, document.getElementById(getVimStatusContainerId()));
+  }, []);
 
   // load the file whenever a selection is changed
   useEffect(() => {
@@ -53,6 +58,7 @@ export default function Editor() {
             automaticLayout: true
           }}
           theme={`vs-${colorMode}`}
+          editorDidMount={onEditorDidMount}
         />
       </Container>
     ): <EmptyState />
