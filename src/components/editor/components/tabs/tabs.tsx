@@ -29,7 +29,7 @@ const TabContainer = styled.div<Omit<TabProps, 'onClose'>>`
   color: ${props => props.isSelected? props.theme.colors['tab.activeForeground']: props.theme.colors['tab.inactiveForeground']};
   background: ${props => props.isSelected? props.theme.colors['tab.activeBackground']: 'none'};
   border-right: 1px solid ${props => props.theme.colors['tab.border']};
-  border-bottom: 1px solid ${props => props.isSelected? props.theme.colors['tab.activeBorder']: 'none'};
+  border-bottom: 1px solid ${props => props.isSelected? props.theme.colors['tab.activeBorder'] || props.theme.colors['tab.activeBackground']: 'none'};
   cursor: pointer;
 `;
 
