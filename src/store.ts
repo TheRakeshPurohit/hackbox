@@ -1,7 +1,7 @@
 import createStore from 'zustand';
 import vsDarkTheme from './themes/vs-dark';
 import vsLightTheme from './themes/vs-light';
-import { loadMonacoModels } from './utils/utils';
+import { getColorMode, loadMonacoModels, saveColorMode } from './utils/utils';
 
 type State = {
   openFiles: string[],
@@ -18,7 +18,7 @@ type State = {
 
 export const useStore = createStore<State>(set => ({
   openFiles: [],
-  colorMode: 'dark',
+  colorMode: getColorMode(),
   files: {},
   setFiles: (files: Record<string, string>) => set(() => {
     loadMonacoModels(files);
@@ -29,8 +29,12 @@ export const useStore = createStore<State>(set => ({
     const colorMode = state.colorMode;
 
     if (colorMode === 'dark') {
+      saveColorMode('light');
+
       return { theme: vsLightTheme, colorMode: 'light' };
     } else {
+      saveColorMode('dark');
+
       return { theme: vsDarkTheme, colorMode: 'dark' };
     }
   }),
@@ -45,7 +49,7 @@ export const useStore = createStore<State>(set => ({
 
     return { selectedFile: filePath, openFiles };
   }),
-  theme: vsDarkTheme,
+  theme: getColorMode() === 'dark'? vsDarkTheme: vsLightTheme,
   closeFile: (filePath) => set((state) => {
     let openFiles = [...state.openFiles];
     const fileIndex = openFiles.indexOf(filePath);

@@ -1,7 +1,8 @@
 import { getIconForFile, getIconForFolder, getIconForOpenFolder } from "vscode-material-icon-theme-js";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
-const vscodeMaterialIcons = 'https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons';
+const VS_MATERIAL_ICONS = 'https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons';
+const LS_COLOR_MODE_KEY = 'COLOR_MODE';
 
 export function getBasename(filename: string) {
   const fileParts = filename.split('/');
@@ -11,15 +12,15 @@ export function getBasename(filename: string) {
 }
 
 export function getFileIcon(filename: string) {
-  return `${vscodeMaterialIcons}/${getIconForFile(filename)}`;
+  return `${VS_MATERIAL_ICONS}/${getIconForFile(filename)}`;
 }
 
 export function getFolderIcon(filename: string) {
-  return `${vscodeMaterialIcons}/${getIconForFolder(filename)}`;
+  return `${VS_MATERIAL_ICONS}/${getIconForFolder(filename)}`;
 }
 
 export function getOpenFolderIcon(filename: string) {
-  return `${vscodeMaterialIcons}/${getIconForOpenFolder(filename)}`;
+  return `${VS_MATERIAL_ICONS}/${getIconForOpenFolder(filename)}`;
 }
 
 /* eslint-disable no-loop-func */
@@ -99,4 +100,20 @@ export function loadMonacoModels(files: Record<string, string>) {
 
 export function getVimStatusContainerId() {
   return 'vim-status-container';
+}
+
+export function getColorMode(): 'dark' | 'light' {
+  const colorMode = localStorage.getItem(LS_COLOR_MODE_KEY);
+
+  if (colorMode === 'light') {
+    return 'light';
+  } else if (colorMode === 'dark') {
+    return 'dark';
+  } else {
+    return 'dark';
+  }
+}
+
+export function saveColorMode(colorMode: 'light' | 'dark') {
+  localStorage.setItem(LS_COLOR_MODE_KEY, colorMode);
 }
