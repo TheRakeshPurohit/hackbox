@@ -12,6 +12,7 @@ const NodeContainer = styled.div`
   padding-left: 20px;
   align-items: center;
   user-select: none;
+  outline: none;
 `;
 
 const FileNameContainer = styled.div`
@@ -32,7 +33,7 @@ const TreeCSS = createGlobalStyle`
     color: ${(props: any) => props.theme.colors['list.inactiveSelectionForeground']};
   }
 
-  .selected-node-wrapper:focus {
+  .selected-node-wrapper:focus-within {
     background: ${(props: any) => props.theme.colors['list.activeSelectionBackground']};
     color: ${(props: any) => props.theme.colors['list.activeSelectionForeground']};
   }
@@ -79,7 +80,7 @@ export default function FileTree() {
     const entityName = getBasename(node.data.path);
 
     return (
-      <NodeContainer onClick={(evt) => {
+      <NodeContainer tabIndex={0} onClick={(evt) => {
         onToggle(evt);
 
         tree.handlers.setSelected(
