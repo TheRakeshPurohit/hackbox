@@ -6,7 +6,7 @@ const Container = styled.div`
   background: ${(props) => props.theme.colors['activityBar.background']};
   color: ${(props) => props.theme.colors['activityBar.foreground']};
   height: 100%;
-  width: 60px;
+  width: 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -32,7 +32,7 @@ const ActivityBarItem = styled.div<SidebarItemProps>`
   `3px solid ${props.theme.colors['activityBar.activeBorder']}`: 
   `3px solid ${props.theme.colors['activityBar.background']}`};
   div {
-    font-size: 2em !important;
+    font-size: 1.8em !important;
     padding: 15px 0;
     margin-left: -3px;
   }

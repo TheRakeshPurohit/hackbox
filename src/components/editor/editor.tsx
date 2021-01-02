@@ -48,7 +48,8 @@ export default function Editor() {
             minimap: {
               enabled: false
             },
-            scrollBeyondLastLine: false
+            scrollBeyondLastLine: false,
+            automaticLayout: true
           }}
           theme={`vs-${colorMode}`}
         />
