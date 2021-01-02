@@ -30,14 +30,12 @@ type OpenFileContainerProps = {
 const OpenFileContainer = styled.div<OpenFileContainerProps>`
   margin-left: 20px;
   display: flex;
-  flex-direction: row;
   align-items: center;
 `;
 
 const FileNameContainer = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: row;
 `;
 
 export default function OpenFiles() {

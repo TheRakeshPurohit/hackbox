@@ -1,5 +1,7 @@
+import { useStore } from '@hackbox/store';
 import React from 'react';
 import styled from 'styled-components';
+import { getLanguageNameFromExt } from '@hackbox/utils/utils';
 
 const Container = styled.div`
   background: ${props => props.theme.colors['statusBar.background']};
@@ -12,7 +14,7 @@ const Container = styled.div`
   justify-content: flex-end;
   padding: 5px 0px;
   box-sizing: border-box;
-  font-size: 0.8em;
+  font-size: 0.8em;\
 `;
 
 const Content = styled.div`
@@ -24,11 +26,13 @@ const Content = styled.div`
 `;
 
 export default function Statusbar() {
+  const selectedFile = useStore(state => state.selectedFile);
+  const language = getLanguageNameFromExt(selectedFile);
 
   return (
     <Container>
       <Content>
-        <div>JavaScript</div>
+        <div>{language}</div>
         <div className="codicon codicon-bell-dot" />
       </Content>
     </Container>

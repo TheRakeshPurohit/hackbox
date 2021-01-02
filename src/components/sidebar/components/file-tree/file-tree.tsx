@@ -10,15 +10,19 @@ const NodeContainer = styled.div`
   display: flex;
   padding: 4px;
   padding-left: 20px;
-  align-items: flex-baseline;
+  align-items: center;
   user-select: none;
 `;
 
-const NameContainer = styled.div`
+const FileNameContainer = styled.div`
+  display: flex;
+  align-items: center;
   margin-left: 5px;
 `;
 
 const IconContainer = styled.div<{ isFile?: boolean }>`
+  display: flex;
+  align-items: center;
   margin-left: ${props => props.isFile? "15px": "5px"};
 `;
 
@@ -83,20 +87,22 @@ export default function FileTree() {
           setSelectedFile(node.data.path);
         }
       }}>
-        {node.data.isDir && (
-          <>
-            <div className={`codicon codicon-chevron-${node.isOpened()? 'down': 'right'}`}></div>
-            <IconContainer>
-              <Icon entityName={entityName} isDir={true} isDirOpen={node.isOpened()} />
+        <FileNameContainer>
+          {node.data.isDir && (
+            <>
+              <div className={`codicon codicon-chevron-${node.isOpened()? 'down': 'right'}`}></div>
+              <IconContainer>
+                <Icon entityName={entityName} isDir={true} isDirOpen={node.isOpened()} />
+              </IconContainer>
+            </>
+          )}
+          {!node.data.isDir && (
+            <IconContainer isFile={true}>
+              <Icon entityName={entityName} />
             </IconContainer>
-          </>
-        )}
-        {!node.data.isDir && (
-          <IconContainer isFile={true}>
-            <Icon entityName={entityName} />
-          </IconContainer>
-        )} 
-        <NameContainer>{entityName}</NameContainer>
+          )} 
+          <div style={{ marginLeft: "5px" }}>{entityName}</div>
+        </FileNameContainer>
       </NodeContainer>
     );
   }, [setSelectedFile]);
