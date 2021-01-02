@@ -74,7 +74,7 @@ export default function FileTree() {
         parent = parent.getParent();
       }
     }
-  }, [selectedFile])
+  }, [selectedFile, tree.instance.enhancedData])
   
   const renderNode = useCallback(({ node, onToggle }: DefaultNodeProps) => {
     const entityName = getBasename(node.data.path);

@@ -16,6 +16,7 @@ const Container = styled.div`
 
 const Workspace = styled.div`
   height: calc(100vh - 25px);
+  display: flex;
 `;
 
 const EditorContainer = styled.div`
@@ -28,7 +29,7 @@ const AciticityBarAndSidebarContainer = styled.div`
 `;
 
 export default function Home() {
-  const [selectedSidebarContainer, setSelectedSidebarContainer] = useState('files');
+  const [selectedSidebarContainer, setSelectedSidebarContainer] = useState<string|null>('files');
   const setFiles = useStore(state => state.setFiles);
 
   useEffect(() => {
@@ -38,15 +39,24 @@ export default function Home() {
   return (
     <Container>
       <Workspace>
-        <SplitPane minSize={200} defaultSize={300}>
-          <AciticityBarAndSidebarContainer>
-            <ActivityBar onSidebarItemClicked={name => name && setSelectedSidebarContainer(name)} />
-            <SideBar selectedContainer={selectedSidebarContainer} />
-          </AciticityBarAndSidebarContainer>
-          <EditorContainer>
-            <Editor />
-          </EditorContainer>  
-        </SplitPane>
+        {
+          selectedSidebarContainer? (
+            <SplitPane minSize={200} defaultSize={300}>
+              <AciticityBarAndSidebarContainer>
+                <ActivityBar defaultSelectedItem={selectedSidebarContainer} onSidebarItemClicked={name => setSelectedSidebarContainer(name)} />
+                <SideBar selectedContainer={selectedSidebarContainer} />
+              </AciticityBarAndSidebarContainer>
+              <EditorContainer>
+                <Editor />
+              </EditorContainer>  
+            </SplitPane>
+          ): (
+            <>
+              <ActivityBar defaultSelectedItem={selectedSidebarContainer} onSidebarItemClicked={name => setSelectedSidebarContainer(name)} />
+              <Editor />
+            </>
+          )
+        }
       </Workspace>
       <Statusbar />
     </Container>

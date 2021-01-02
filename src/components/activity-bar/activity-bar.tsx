@@ -39,10 +39,11 @@ const ActivityBarItem = styled.div<SidebarItemProps>`
 `;
 
 type ActivityBarProps = {
+  defaultSelectedItem: string | null;
   onSidebarItemClicked: (itemName: string | null) => void;
 }
 
-export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) {
+export default function ActivityBar({ onSidebarItemClicked, defaultSelectedItem = 'files' }: ActivityBarProps) {
   const onClicked = (fn: (name: string | null) => void, name: string) => () => {
     setSelectedItem(name);
 
@@ -53,7 +54,7 @@ export default function ActivityBar({ onSidebarItemClicked }: ActivityBarProps) 
       fn(name);
     }
   };
-  const [selectedItem, setSelectedItem] = useState<string|null>('files');
+  const [selectedItem, setSelectedItem] = useState<string|null>(defaultSelectedItem);
   const toggleColorMode = useStore(state => state.toggleColorMode);
 
   return (
