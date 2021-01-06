@@ -1,5 +1,6 @@
 import { getIconForFile, getIconForFolder, getIconForOpenFolder } from "vscode-material-icon-theme-js";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import { Manager } from 'smooshpack';
 
 const VS_MATERIAL_ICONS = 'https://cdn.jsdelivr.net/gh/PKief/vscode-material-icon-theme@master/icons';
 const LS_COLOR_MODE_KEY = 'COLOR_MODE';
@@ -116,4 +117,74 @@ export function getColorMode(): 'dark' | 'light' {
 
 export function saveColorMode(colorMode: 'light' | 'dark') {
   localStorage.setItem(LS_COLOR_MODE_KEY, colorMode);
+}
+
+export function startSandpack(ref: any) {
+  const files = {
+    "/src/index.jsx": {
+      code: `\
+  import React from "react";
+  import { render } from "react-dom";
+  
+  import "./styles.css";
+  
+  function App() {
+    return (
+      <div className="App">
+        <h1>Hello React</h1>
+      </div>
+    );
+  }
+  
+  render(<App />, document.getElementById("app"));`
+    },
+    "/src/styles.css": {
+      code: `\
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+  }`
+    },
+    "/public/index.html": {
+      code: `\
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Hello React</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="app"></div>
+  </body>
+  </html>`
+    },
+    // Manage dependency with package.json instead of `dependencies` object.
+    "/package.json": {
+      code: JSON.stringify(
+        {
+          name: "react-app",
+          version: "1.0.0",
+          description: "",
+          main: "src/index.jsx",
+          dependencies: {
+            react: "16.8.3",
+            "react-dom": "16.8.3"
+            // "react-scripts": "2.1.8"
+          }
+        },
+        null,
+        2
+      )
+    }
+  };
+  
+  new Manager(
+    ref,
+    {
+      files,
+      showOpenInCodeSandbox: false
+    }
+  )
 }

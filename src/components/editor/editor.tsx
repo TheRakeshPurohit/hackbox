@@ -55,7 +55,8 @@ export default function Editor() {
               enabled: false
             },
             scrollBeyondLastLine: false,
-            automaticLayout: true
+            automaticLayout: true,
+            wordWrap: "on"
           }}
           theme={`vs-${colorMode}`}
           editorDidMount={onEditorDidMount}

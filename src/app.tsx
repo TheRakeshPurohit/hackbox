@@ -9,6 +9,7 @@ import 'vscode-codicons/dist/codicon.css';
 import { useStore } from './store';
 import { FILES } from './templates/react';
 import SplitPane from 'react-split-pane';
+import BrowserPreview from './components/browser-preview/browser-preview';
 
 const Container = styled.div`
   height: 100vh;
@@ -21,6 +22,7 @@ const Workspace = styled.div`
 
 const EditorContainer = styled.div`
   height: calc(100vh - 25px);
+  display: flex;
 `;
 
 const AciticityBarAndSidebarContainer = styled.div`
@@ -48,12 +50,16 @@ export default function Home() {
               </AciticityBarAndSidebarContainer>
               <EditorContainer>
                 <Editor />
+                <BrowserPreview />
               </EditorContainer>  
             </SplitPane>
           ): (
             <>
               <ActivityBar defaultSelectedItem={selectedSidebarContainer} onSidebarItemClicked={name => setSelectedSidebarContainer(name)} />
-              <Editor />
+              <EditorContainer>
+                <Editor />
+                <BrowserPreview />
+              </EditorContainer>
             </>
           )
         }
