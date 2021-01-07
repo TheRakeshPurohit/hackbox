@@ -1,10 +1,10 @@
 import { convertFilesToTree } from './utils';
 
 const sampleFiles = {
-  'public/index.html': '',
-  'src/index.tsx': '',
-  'src/index.css': '',
-  'package.json': ''
+  '/public/index.html': '',
+  '/src/index.tsx': '',
+  '/src/index.css': '',
+  '/package.json': ''
 };
 
 describe('utils', () => {

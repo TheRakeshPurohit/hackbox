@@ -33,27 +33,29 @@ export function convertFilesToTree(files: Record<string, string>) {
     let currentRoot = tree;
 
     fileParts.forEach((filePart, index) => {
-      const currentPath = fileParts.slice(0, index + 1).join('/');
-      const node = currentRoot.find((node: any) => node.path === currentPath);
+      if (filePart.trim().length > 0) {
+        const currentPath = fileParts.slice(0, index + 1).join('/');
+        const node = currentRoot.find((node: any) => node.path === currentPath);
 
-      if (!node) {
-        const isDir = index !== fileParts.length - 1;
-        const newNode = {
-          id: currentPath,
-          path: currentPath,
-          isDir,
-          children: []
-        };
+        if (!node) {
+          const isDir = index !== fileParts.length - 1;
+          const newNode = {
+            id: currentPath,
+            path: currentPath,
+            isDir,
+            children: []
+          };
 
-        currentRoot.push(newNode);
+          currentRoot.push(newNode);
 
-        currentRoot = newNode.children;
-      } else {
-        if (!node.children) {
-          node.children = [];
+          currentRoot = newNode.children;
+        } else {
+          if (!node.children) {
+            node.children = [];
+          }
+
+          currentRoot = node.children;
         }
-
-        currentRoot = node.children;
       }
     });
   }
@@ -87,12 +89,12 @@ export function getLanguageFromExt(filename: string) {
   return extLanguageMap[ext];
 }
 
-export function loadMonacoModels(files: Record<string, string>) {
+export function loadMonacoModels(files: Record<string, { code: string }>) {
   monaco.editor.getModels().forEach(model => model.dispose());
   
   for (const filePath in files) {
     monaco.editor.createModel(
-      files[filePath],
+      files[filePath].code,
       getLanguageFromExt(getBasename(filePath)),
       monaco.Uri.from({ path: filePath, scheme: 'file' })
     );
@@ -131,7 +133,7 @@ export function startSandpack(ref: any) {
   function App() {
     return (
       <div className="App">
-        <h1>Hello React</h1>
+        <h1>Hello Readct</h1>
       </div>
     );
   }

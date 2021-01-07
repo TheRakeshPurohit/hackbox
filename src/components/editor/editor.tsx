@@ -23,7 +23,7 @@ export default function Editor() {
   const monacoEditorRef = useRef<MonacoEditor|null>();
   const loadEditorModel = (selectedFile: string) => {
     if (monacoEditorRef.current && selectedFile) {
-      const editorModel = monaco.editor.getModels().find(model => model.uri.path === `/${selectedFile}`);
+      const editorModel = monaco.editor.getModels().find(model => model.uri.path === `${selectedFile}`);
 
       if (editorModel) {
         monacoEditorRef.current.editor?.setModel(editorModel);

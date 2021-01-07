@@ -6,21 +6,21 @@ import { getColorMode, loadMonacoModels, saveColorMode } from './utils/utils';
 type State = {
   openFiles: string[],
   colorMode: 'light' | 'dark',
-  files: Record<string, string>,
+  files: Record<string, { code: string }>,
   setOpenFiles: (files: string[]) => void,
   selectedFile: string;
   setSelectedFile: (filePath: string) => void,
   theme: any;
   toggleColorMode: () => void,
   closeFile: (filePath: string) => void;
-  setFiles: (files: Record<string, string>) => void;
+  setFiles: (files: Record<string, { code: string }>) => void;
 }
 
 export const useStore = createStore<State>(set => ({
   openFiles: [],
   colorMode: getColorMode(),
   files: {},
-  setFiles: (files: Record<string, string>) => set(() => {
+  setFiles: (files: Record<string, { code: string }>) => set(() => {
     loadMonacoModels(files);
     
     return { files };
